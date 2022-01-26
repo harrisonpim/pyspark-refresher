@@ -3,6 +3,8 @@ version: "3.8"
 services:
   jupyter:
     build: jupyter
+    depends_on:
+      - spark
     ports:
       - 8888:8888
     volumes:
@@ -10,7 +12,7 @@ services:
         source: ./jupyter/notebooks
         target: /home/jovyan/notebooks
       - type: bind
-        source: ./jupyter/data
+        source: ./data
         target: /home/jovyan/data
       - type: bind
         source: ./jupyter/src
@@ -18,3 +20,32 @@ services:
     env_file:
       - .env
       - ./jupyter/.env
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+  spark:
+    image: docker.io/bitnami/spark:3
+    depends_on:
+      - spark-worker
+    environment:
+      - SPARK_MODE=master
+    env_file:
+      - .env
+    ports:
+      - 8080:8080
+      - 7077:7077
+      - 4040:4040
+    volumes:
+      - type: bind
+        source: ./data
+        target: /data
+  spark-worker:
+    image: docker.io/bitnami/spark:3
+    env_file:
+      - .env
+    ports:
+      - 8081:8081
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark:7077
+      - SPARK_WORKER_MEMORY=3G
+      - SPARK_WORKER_CORES=1
