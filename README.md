@@ -1,8 +1,8 @@
 # PySpark refresher
 
-It's been a while since I've used PySpark. In this repo I'm giving myself a quick refresher on the basics. I'm setting up an environment with docker, and running the code through jupyter.
+It's been a while since I've used PySpark. In this repo I'm giving myself a quick refresher on the basics. I'm setting up a spark cluster with docker, and running code against it through a jupyterlab container. Every bit of this setup should be completely reproducible.
 
-I'll be working through a lot of the examples/functionality from the [PySpark docs](https://spark.apache.org/docs/latest/api/python/index.html). The code itself lives in the [jupyter/notebooks](./jupyter/notebooks) directory.
+I'll be working through a lot of the examples/functionality from the [docs](https://spark.apache.org/docs/latest/api/python/index.html), exploring some standard datasets, and finally building a simple ML pipeline. The code itself lives in the [jupyter/notebooks](./jupyter/notebooks) directory.
 
 ## Running this yourself
 
@@ -11,7 +11,7 @@ I'll be working through a lot of the examples/functionality from the [PySpark do
 To start the jupyter notebook container with a connection to the standalone spark cluster, run
 
 ```shell
-docker compose up --build
+docker compose up --build jupyter
 ```
 
 ### Standalone spark interface
@@ -40,7 +40,7 @@ For anything else, you can open a regular bash shell in the container with
 docker exec -it pyspark-refresher_spark_1 /bin/bash
 ```
 
-### Getting data
+### Datasets
 
 I've used a couple of standard datasets in this repo, which live in the [data/](./data/) directory. To get them yourself, run
 
@@ -48,10 +48,10 @@ I've used a couple of standard datasets in this repo, which live in the [data/](
 docker compose run get_data
 ```
 
-## Adding more workers
+### Adding more spark worker nodes
 
-To add more workers, run eg.
+By default, everything above will run with a single worker node. To add more workers, run eg.
 
 ```shell
-docker compose up --scale spark-worker=3
+docker compose up --build jupyter --scale spark-worker=3
 ```
