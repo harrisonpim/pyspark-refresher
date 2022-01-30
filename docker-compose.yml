@@ -56,5 +56,5 @@ services:
         source: ./data
         target: /data
     command: > 
-      sh -c "curl http://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data >> /data/iris.csv &&
-             curl https://web.stanford.edu/class/archive/cs/cs109/cs109.1166/stuff/titanic.csv >> ./data/titanic.csv"
+      sh -c "curl http://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data > /data/iris.csv &&
+             curl https://web.stanford.edu/class/archive/cs/cs109/cs109.1166/stuff/titanic.csv > ./data/titanic.csv"

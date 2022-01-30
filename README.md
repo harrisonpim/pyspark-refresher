@@ -40,17 +40,13 @@ For anything else, you can open a regular bash shell in the container with
 docker exec -it pyspark-refresher_spark_1 /bin/bash
 ```
 
-## Getting data
+### Getting data
 
-I've used a couple of standard datasets in this repo.
-
-To get them yourself, run
+I've used a couple of standard datasets in this repo, which live in the [data/](./data/) directory. To get them yourself, run
 
 ```shell
 docker compose run get_data
 ```
-
-## Modifications
 
 ## Adding more workers
 
