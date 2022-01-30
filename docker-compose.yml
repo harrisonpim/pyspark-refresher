@@ -4,7 +4,7 @@ services:
   jupyter:
     build: jupyter
     depends_on:
-      - spark
+      - spark-master
     ports:
       - 8888:8888
     volumes:
@@ -47,5 +47,14 @@ services:
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark:7077
-      - SPARK_WORKER_MEMORY=3G
+      - SPARK_WORKER_MEMORY=1G
       - SPARK_WORKER_CORES=1
+  get_data:
+    image: curlimages/curl
+    volumes:
+      - type: bind
+        source: ./data
+        target: /data
+    command: > 
+      sh -c "curl http://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data >> /data/iris.csv &&
+             curl https://web.stanford.edu/class/archive/cs/cs109/cs109.1166/stuff/titanic.csv >> ./data/titanic.csv"
